@@ -18,14 +18,13 @@ public class RsfReader {
     }
 
     /**
-     * Decodes the file as an RDF sound file into an {@code AudioInputStream}.
+     * Decodes the input stream as an RSF sound file into an {@code AudioInputStream}.
      *
-     * @param file the RSF sound file
-     * @return an {@code AudioInputStream} decoded from the file
+     * @param stream the input stream
+     * @return an {@code AudioInputStream} decoded from the input stream
      * @throws IOException if an error occurs during reading, or if the file is not in RSF format
      */
-    public static AudioInputStream read(File file) throws IOException {
-        InputStream stream = new FileInputStream(file);
+    public static AudioInputStream read(InputStream stream) throws IOException {
         if (stream.read() != 0x01) throw new FileFormatException("Header in RSF file is incorrect");
         if (stream.read() != 0x00) throw new FileFormatException("Header in RSF file is incorrect");
         int length = stream.read();
@@ -36,5 +35,16 @@ public class RsfReader {
         if (stream.read() != 0x00) throw new FileFormatException("Header in RSF file is incorrect");
         AudioFormat format = new AudioFormat(sampleRate, 8, 1, true, true);
         return new AudioInputStream(stream, format, length);
+    }
+
+    /**
+     * Decodes the file as an RDF sound file into an {@code AudioInputStream}.
+     *
+     * @param file the RSF sound file
+     * @return an {@code AudioInputStream} decoded from the file
+     * @throws IOException if an error occurs during reading, or if the file is not in RSF format
+     */
+    public static AudioInputStream read(File file) throws IOException {
+        return read(new FileInputStream(file));
     }
 }
