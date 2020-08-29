@@ -38,7 +38,7 @@ public class RsfReader {
     }
 
     /**
-     * Decodes the file as an RDF sound file into an {@code AudioInputStream}.
+     * Decodes the file as an RSF sound file into an {@code AudioInputStream}.
      *
      * @param file the RSF sound file
      * @return an {@code AudioInputStream} decoded from the file
